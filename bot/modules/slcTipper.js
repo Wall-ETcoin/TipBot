@@ -13,7 +13,7 @@ exports.commands = ['tipslc'];
 exports.tipslc = {
   usage: '<subcommand>',
   description:
-    '__**Superlumic coin (SLC) Tipper**__\nTransaction Fees: **' + paytxfee + '**\n    **!tipslc** : Displays This Message\n    **!tipslc balance** : get your balance\n    **!tipslc deposit** : get address for your deposits\n    **!tipslc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipslc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipslc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    has a default txfee of ' + paytxfee,
+    '__**SuperLumic coin (SLC) Tipper**__\nTransaction Fees: **' + paytxfee + '**\n    **!tipslc** : Displays This Message\n    **!tipslc balance** : get your balance\n    **!tipslc deposit** : get address for your deposits\n    **!tipslc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipslc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipslc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    has a default txfee of ' + paytxfee,
   process: async function(bot, msg, suffix) {
     let tipper = msg.author.id.replace('!', ''),
       words = msg.content
@@ -24,7 +24,7 @@ exports.tipslc = {
         }),
       subcommand = words.length >= 2 ? words[1] : 'help',
       helpmsg =
-        '__**Superlumic coin (SLC) Tipper**__\nTransaction Fees: **' + paytxfee + '**\n    **!tipslc** : Displays This Message\n    **!tipslc balance** : get your balance\n    **!tipslc deposit** : get address for your deposits\n    **!tipslc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipslc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipslc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    **<> : Replace with appropriate value.**',
+        '__**SuperLumic coin (SLC) Tipper**__\nTransaction Fees: **' + paytxfee + '**\n    **!tipslc** : Displays This Message\n    **!tipslc balance** : get your balance\n    **!tipslc deposit** : get address for your deposits\n    **!tipslc withdraw <ADDRESS> <AMOUNT>** : withdraw coins to specified address\n    **!tipslc <@user> <amount>** :mention a user with @ and then the amount to tip them\n    **!tipslc private <user> <amount>** : put private before Mentioning a user to tip them privately.\n\n    **<> : Replace with appropriate value.**',
       channelwarning = 'Please use <#bot-spam> or DMs to talk to bots.';
     switch (subcommand) {
       case 'help':
@@ -60,10 +60,10 @@ function doHelp(message, helpmsg) {
 function doBalance(message, tipper) {
   slc.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting Superlumic coin (SLC) balance.').then(message => message.delete(10000));
+      message.reply('Error getting SuperLumic coin (SLC) balance.').then(message => message.delete(10000));
     } else {
     message.channel.send({ embed: {
-    title: '**:bank::money_with_wings::moneybag:Superlumic coin (SLC) Balance!:moneybag::money_with_wings::bank:**',
+    title: '**:bank::money_with_wings::moneybag:SuperLumic coin (SLC) Balance!:moneybag::money_with_wings::bank:**',
     color: 1363892,
     fields: [
       {
@@ -85,10 +85,10 @@ function doBalance(message, tipper) {
 function doDeposit(message, tipper) {
   getAddress(tipper, function(err, address) {
     if (err) {
-      message.reply('Error getting your Superlumic coin (SLC) deposit address.').then(message => message.delete(10000));
+      message.reply('Error getting your SuperLumic coin (SLC) deposit address.').then(message => message.delete(10000));
     } else {
     message.channel.send({ embed: {
-    title: '**:bank::card_index::moneybag:Superlumic coin (SLC) Address!:moneybag::card_index::bank:**',
+    title: '**:bank::card_index::moneybag:SuperLumic coin (SLC) Address!:moneybag::card_index::bank:**',
     color: 1363892,
     fields: [
       {
@@ -117,16 +117,16 @@ function doWithdraw(message, tipper, words, helpmsg) {
     amount = getValidatedAmount(words[3]);
 
   if (amount === null) {
-    message.reply("I don't know how to withdraw that much Superlumic coin (SLC)...").then(message => message.delete(10000));
+    message.reply("I don't know how to withdraw that much SuperLumic coin (SLC)...").then(message => message.delete(10000));
     return;
   }
 
   slc.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting Superlumic coin (SLC) balance.').then(message => message.delete(10000));
+      message.reply('Error getting SuperLumic coin (SLC) balance.').then(message => message.delete(10000));
     } else {
       if (Number(amount) + Number(paytxfee) > Number(balance)) {
-        message.channel.send('Please leave atleast ' + paytxfee + ' Superlumic coin (SLC) for transaction fees!');
+        message.channel.send('Please leave atleast ' + paytxfee + ' SuperLumic coin (SLC) for transaction fees!');
         return;
       }
       slc.sendFrom(tipper, address, Number(amount), function(err, txId) {
@@ -134,7 +134,7 @@ function doWithdraw(message, tipper, words, helpmsg) {
           message.reply(err.message).then(message => message.delete(10000));
         } else {
         message.channel.send({embed:{
-        title: '**:outbox_tray::money_with_wings::moneybag:Superlumic coin (SLC) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
+        title: '**:outbox_tray::money_with_wings::moneybag:SuperLumic coin (SLC) Transaction Completed!:moneybag::money_with_wings::outbox_tray:**',
         color: 1363892,
         fields: [
           {
@@ -185,16 +185,16 @@ function doTip(bot, message, tipper, words, helpmsg) {
   let amount = getValidatedAmount(words[amountOffset]);
 
   if (amount === null) {
-    message.reply("I don't know how to tip that much Superlumic coin (SLC)...").then(message => message.delete(10000));
+    message.reply("I don't know how to tip that much SuperLumic coin (SLC)...").then(message => message.delete(10000));
     return;
   }
 
   slc.getBalance(tipper, 1, function(err, balance) {
     if (err) {
-      message.reply('Error getting Superlumic coin (SLC) balance.').then(message => message.delete(10000));
+      message.reply('Error getting SuperLumic coin (SLC) balance.').then(message => message.delete(10000));
     } else {
       if (Number(amount) + Number(paytxfee) > Number(balance)) {
-        message.channel.send('Please leave atleast ' + paytxfee + ' Superlumic coin (SLC) for transaction fees!');
+        message.channel.send('Please leave atleast ' + paytxfee + ' SuperLumic coin (SLC) for transaction fees!');
         return;
       }
 
@@ -225,7 +225,7 @@ function sendSLC(bot, message, tipper, recipient, amount, privacyFlag) {
                 if (privacyFlag) {
                   let userProfile = message.guild.members.find('id', recipient);
                   userProfile.user.send({ embed: {
-                  title: '**:money_with_wings::moneybag:Superlumic coin (SLC) Transaction Completed!:moneybag::money_with_wings:**',
+                  title: '**:money_with_wings::moneybag:SuperLumic coin (SLC) Transaction Completed!:moneybag::money_with_wings:**',
                   color: 1363892,
                   fields: [
                     {
@@ -256,7 +256,7 @@ function sendSLC(bot, message, tipper, recipient, amount, privacyFlag) {
                   ]
                 } });
                 message.author.send({ embed: {
-                title: '**:money_with_wings::moneybag:Superlumic coin (SLC) Transaction Completed!:moneybag::money_with_wings:**',
+                title: '**:money_with_wings::moneybag:SuperLumic coin (SLC) Transaction Completed!:moneybag::money_with_wings:**',
                 color: 1363892,
                 fields: [
                   {
@@ -294,7 +294,7 @@ function sendSLC(bot, message, tipper, recipient, amount, privacyFlag) {
                   }
                 } else {
                   message.channel.send({ embed: {
-                  title: '**:money_with_wings::moneybag:Superlumic coin (SLC) Transaction Completed!:moneybag::money_with_wings:**',
+                  title: '**:money_with_wings::moneybag:SuperLumic coin (SLC) Transaction Completed!:moneybag::money_with_wings:**',
                   color: 1363892,
                   fields: [
                     {
